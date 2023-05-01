@@ -60,6 +60,7 @@ export class ChatboxComponent implements OnInit {
           this.users.push(this.alluser[this.alluser.length-1]);
           this.getlastMessage(this.users[this.users.length-1].userName);
         }
+      this.lastMessageList.sort((a, b) => new Date(b.time).getTime() - new Date(a.time).getTime());
 
       console.log("chat id : " +this.chatId);
 
@@ -100,7 +101,13 @@ export class ChatboxComponent implements OnInit {
           this.messageList = this.chatData.messageList;
           this.secondUserName = this.chatData.secondUserName;
           this.updateLastMessageList(this.firstUserName,this.secondUserName,this.messageObj.replymessage,
-            this.messageObj.senderEmail,new Date().toString());
+            this.messageObj.senderEmail,new Date().toLocaleDateString('en-US', {year: 'numeric',
+              month: '2-digit',
+              day: '2-digit',
+              hour: '2-digit',
+              minute: '2-digit',
+              second: '2-digit'
+            }).replace(',', ''));
         })
       });
       $('.chat-bubble-animation').hide('slow').show('slow');

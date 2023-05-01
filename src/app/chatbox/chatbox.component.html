@@ -19,21 +19,17 @@
         </div>
       </div>
       <div class="scroll-div" >
-        <div class="users-container" *ngFor="let user of users;" >
-          <div class="friend-drawer friend-drawer--onhover"  *ngIf="user.userName!=firstUserName" (click)="goToChat(user.userName)">
+        <div class="users-container"  *ngFor="let message of lastMessageList" >
+          <div class="friend-drawer friend-drawer--onhover" (click)="goToChat(message.secondUsername)">
             <img class="profile-image" src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/robocop.jpg" alt="">
               <div class="text">
-                <h6 >{{user.userName}}</h6>
-                <div *ngFor="let message of lastMessageList">
-                <p *ngIf="message.secondUsername===user.userName"  class="text-muted">{{message.replymessage}}</p>
-                </div>
+                <h6 >{{message.secondUsername}}</h6>
+                <p   class="text-muted">{{message.replymessage}}</p>
               </div>
-            <div *ngFor="let message of lastMessageList">
-            <span *ngIf="message.secondUsername===user.userName" class="time text-muted small">{{message.time.substring(11,16)}}</span>
-            </div>
+            <span  class="time text-muted small">{{message.time.substring(11,16)}}</span>
 
           </div>
-          <hr *ngIf="user.userName!=firstUserName" >
+          <hr >
         </div>
       </div>
     </div>
