@@ -1,0 +1,85 @@
+  <h1 style="margin-left: 500px"> I m {{firstUserName}}</h1>
+
+
+<div class="container">
+  <div class="row no-gutters">
+    <div class="col-md-4 border-right">
+      <div class="settings-tray">
+        <img class="profile-image" src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/filip.jpg" alt="Profile img">
+        <span class="settings-tray--right">
+			<i class="material-icons">cached</i>
+			<i class="material-icons">message</i>
+			<i class="material-icons">menu</i>
+		  </span>
+      </div>
+      <div class="search-box">
+        <div class="input-wrapper">
+          <i class="material-icons">search</i>
+          <input placeholder="Search here" type="text">
+        </div>
+      </div>
+      <div class="scroll-div" >
+        <div class="users-container" *ngFor="let user of users;" >
+          <div class="friend-drawer friend-drawer--onhover"  *ngIf="user.userName!=firstUserName" (click)="goToChat(user.userName)">
+            <img class="profile-image" src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/robocop.jpg" alt="">
+              <div class="text">
+                <h6 >{{user.userName}}</h6>
+                <div *ngFor="let message of lastMessageList">
+                <p *ngIf="message.secondUsername===user.userName"  class="text-muted">{{message.replymessage}}</p>
+                </div>
+              </div>
+            <div *ngFor="let message of lastMessageList">
+            <span *ngIf="message.secondUsername===user.userName" class="time text-muted small">{{message.time.substring(11,16)}}</span>
+            </div>
+
+          </div>
+          <hr *ngIf="user.userName!=firstUserName" >
+        </div>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <div class="settings-tray">
+        <div class="friend-drawer no-gutters friend-drawer--grey">
+          <img class="profile-image" src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/robocop.jpg" alt="">
+          <div class="text">
+            <h6>{{secondUserName}}</h6>
+            <p class="text-muted">Layin' down the law since like before Christ...</p>
+          </div>
+          <span class="settings-tray--right">
+			  <i class="material-icons">cached</i>
+			  <i class="material-icons">message</i>
+			  <i class="material-icons">menu</i>
+			</span>
+        </div>
+      </div>
+      <div class="scroll-div" #scrollMe [scrollTop]="scrollMe.scrollHeight">
+        <div  *ngFor="let msg of allmessages;let i=index" >
+            <div class="d-flex justify-content-start mb-4" *ngIf="msg.senderEmail!=senderCheck">
+                <div class="chat-bubble chat-bubble--left" style="  background: #eee; color: black;" >
+                  {{msg.replymessage}}
+                  <span class="msg_time_send">{{msg.time.substring(11,16)}}</span>
+                </div>
+            </div>
+            <div class="d-flex justify-content-end mb-4" *ngIf="msg.senderEmail==senderCheck">
+                <div class="chat-bubble chat-bubble--right" style="  background: #00f;">
+                  {{msg.replymessage}}
+                  <span class="msg_time_send">{{msg.time.substring(11,16)}} </span>
+                </div>
+            </div>
+        </div>
+      </div>
+
+        <div class="row " [formGroup]="chatForm" #f="ngForm">
+          <div class="col-12">
+            <div class="chat-box-tray">
+              <i class="material-icons">sentiment_very_satisfied</i>
+              <textarea name="" class="form-control type_msg" placeholder="Type your message..."
+                        maxlength="255"        formControlName="replymessage" (keyup.enter)="sendMessage()"></textarea>
+              <i class="material-icons">mic</i>
+              <i class="material-icons" (click)="sendMessage()"  >send</i>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
